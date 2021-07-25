@@ -11,6 +11,8 @@
 #define STAPSK "YOUR-WiFi-PASSWORD"
 #endif
 
+#define PIN 5
+
 const char *ssid = STASSID;
 const char *password = STAPSK;
 
@@ -21,7 +23,7 @@ DHTesp dht;
 void setup()
 {
     Serial.begin(115200);
-    dht.setup(5, DHTesp::DHT22);
+    dht.setup(PIN, DHTesp::DHT22);
 
     Serial.println();
     Serial.println();
