@@ -18,6 +18,3 @@ Get humidity and temparature from DHT22 Sensor with ESP8266 in HomeKit.
     }
 ]
 ```
-
-홈브리치 구성 방법
-
