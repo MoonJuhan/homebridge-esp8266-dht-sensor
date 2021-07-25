@@ -1,0 +1,26 @@
+{
+  "name": "homebridge-esp8266-dht22",
+  "version": "1.0.0",
+  "description": "Allows homebridge to get ESP8266 DHT22 Sensor",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MoonJuhan/homebridge-esp8266-dht22.git"
+  },
+  "author": "MoonJuhan",
+  "license": "ISC",
+  "keywords": [
+    "homebridge-plugin"
+  ],
+  "engines": {
+    "node": ">=10.17.0",
+    "homebridge": ">=0.4.8"
+  },
+  "bugs": {
+    "url": "https://github.com/MoonJuhan/homebridge-esp8266-dht22/issues"
+  },
+  "homepage": "https://github.com/MoonJuhan/homebridge-esp8266-dht22#readme"
+}
