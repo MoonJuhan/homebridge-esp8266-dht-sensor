@@ -1,5 +1,7 @@
 "use strict";
 
+const axios = require("axios");
+
 const setup = (homebridge) => {
   homebridge.registerAccessory(
     "homebridge-esp8266-dht22",
@@ -22,6 +24,11 @@ class ESP8266DHT22 {
     this.ip = config.ip;
     this.log(`Name : ${this.name}, IP : ${this.ip}`);
 
+    this.sensorData = {
+      temperature: 26,
+      humidity: 50
+    }
+
     this.temperatureService = new this.Service.TemperatureSensor(this.name);
 
     this.temperatureService
@@ -29,13 +36,30 @@ class ESP8266DHT22 {
       .onGet(this.handleCurrentTemperatureGet.bind(this));
   }
 
-  handleCurrentTemperatureGet() {
-    this.log.debug("Triggered GET CurrentTemperature");
+  async handleCurrentTemperatureGet() {
+    this.log("Triggered GET CurrentTemperature");
+    this.getSensorData();
 
-    // GET Temperature Data
-    const currentValue = 26;
+    return this.sensorData.temperature;
+  }
 
-    return currentValue;
+  async getSensorData() {
+    this.log("Axios", this.ip);
+    const axios = require("axios");
+
+    const refineData = (data) => {
+      return JSON.parse(data.replace(/&quot;/g, '"'));
+    };
+
+    try {
+      const { data } = await axios.get(`http://${this.ip}`);
+      this.log(data);
+
+      this.sensorData = refineData(data);
+      this.log(this.sensorData);
+    } catch (error) {
+      this.log(error);
+    }
   }
 
   getServices() {
