@@ -26,21 +26,33 @@ class ESP8266DHT {
 
     this.sensorData = {
       temperature: 26,
-      humidity: 50
-    }
+      humidity: 50,
+    };
 
     this.temperatureService = new this.Service.TemperatureSensor(this.name);
 
     this.temperatureService
       .getCharacteristic(this.Characteristic.CurrentTemperature)
       .onGet(this.handleCurrentTemperatureGet.bind(this));
+
+    this.humidityService = new this.Service.HumiditySensor(this.name);
+
+    // create handlers for required characteristics
+    this.humidityService
+      .getCharacteristic(this.Characteristic.CurrentRelativeHumidity)
+      .onGet(this.handleCurrentRelativeHumidityGet.bind(this));
   }
 
-  async handleCurrentTemperatureGet() {
+  handleCurrentTemperatureGet() {
     this.log("Triggered GET CurrentTemperature");
     this.getSensorData();
 
     return this.sensorData.temperature;
+  }
+
+  handleCurrentRelativeHumidityGet() {
+    this.log("Triggered GET CurrentHumidity");
+    return this.sensorData.humidity;
   }
 
   async getSensorData() {
