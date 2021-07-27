@@ -75,7 +75,7 @@ class ESP8266DHT {
   }
 
   getServices() {
-    return [this.temperatureService];
+    return [this.temperatureService, this.humidityService];
   }
 }
 
