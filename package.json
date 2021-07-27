@@ -20,9 +20,9 @@
     "homebridge": ">=0.4.8"
   },
   "bugs": {
-    "url": "https://github.com/MoonJuhan/homebridge-esp8266-dht22/issues"
+    "url": "https://github.com/MoonJuhan/homebridge-esp8266-dht-sensor/issues"
   },
-  "homepage": "https://github.com/MoonJuhan/homebridge-esp8266-dht22#readme",
+  "homepage": "https://github.com/MoonJuhan/homebridge-esp8266-dht-sensor#readme",
   "dependencies": {
     "axios": "^0.21.1"
   }
