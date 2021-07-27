@@ -1,4 +1,4 @@
-# homebridge-esp8266-dht22
+# homebridge-esp8266-dht-sensor
 
 Get humidity and temparature from DHT22 Sensor with ESP8266 in HomeKit.
 
@@ -12,7 +12,7 @@ Get humidity and temparature from DHT22 Sensor with ESP8266 in HomeKit.
 ```
 "accessories": [
     {
-        "accessory": "ESP8266DHT22"
+        "accessory": "ESP8266DHT"
         "name": "ESP8266",
         "ip": "192.168.0.10",
     }

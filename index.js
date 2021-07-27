@@ -4,15 +4,15 @@ const axios = require("axios");
 
 const setup = (homebridge) => {
   homebridge.registerAccessory(
-    "homebridge-esp8266-dht22",
-    "ESP8266DHT22",
-    ESP8266DHT22
+    "homebridge-esp8266-dht-sensor",
+    "ESP8266DHT",
+    ESP8266DHT
   );
 };
 
-class ESP8266DHT22 {
+class ESP8266DHT {
   constructor(log, config, api) {
-    log("ESP8266DHT22 Start!");
+    log("ESP8266DHT Start!");
     this.log = log;
     this.config = config;
     this.api = api;
