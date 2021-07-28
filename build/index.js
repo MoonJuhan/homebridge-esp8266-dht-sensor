@@ -40,10 +40,7 @@ var ESP8266DHT = /*#__PURE__*/function () {
     this.humidityService.getCharacteristic(this.Characteristic.CurrentRelativeHumidity).onGet(this.handleCurrentRelativeHumidityGet.bind(this));
 
     if (config.gas) {
-      this.setGoogleAppsScript({
-        sensorData: this.sensorData,
-        config: config.gas
-      });
+      this.setGoogleAppsScript(config.gas);
     }
   }
 
@@ -116,10 +113,10 @@ var ESP8266DHT = /*#__PURE__*/function () {
     value: function setGoogleAppsScript(params) {
       var _this = this;
 
-      if (!_gas._auth) (0, _gas.authorize)(params.config);
+      if (!_gas._auth) (0, _gas.authorize)(params);
 
       var callGoogleAppsScript = function callGoogleAppsScript() {
-        (0, _gas.callAppsScript)(params.config.scriptId, params.config.functionName, params.sensorData, function (bool, res) {
+        (0, _gas.callAppsScript)(params.scriptId, params.functionName, _this.sensorData, function (bool, res) {
           if (bool) {
             setTimeout(function () {
               _this.getSensorData();

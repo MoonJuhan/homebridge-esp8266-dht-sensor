@@ -42,10 +42,7 @@ class ESP8266DHT {
       .onGet(this.handleCurrentRelativeHumidityGet.bind(this));
 
     if (config.gas) {
-      this.setGoogleAppsScript({
-        sensorData: this.sensorData,
-        config: config.gas,
-      });
+      this.setGoogleAppsScript(config.gas);
     }
   }
 
@@ -82,13 +79,13 @@ class ESP8266DHT {
   }
 
   setGoogleAppsScript(params) {
-    if (!_auth) authorize(params.config);
+    if (!_auth) authorize(params);
 
     const callGoogleAppsScript = () => {
       callAppsScript(
-        params.config.scriptId,
-        params.config.functionName,
-        params.sensorData,
+        params.scriptId,
+        params.functionName,
+        this.sensorData,
         (bool, res) => {
           if (bool) {
             setTimeout(() => {
@@ -104,7 +101,6 @@ class ESP8266DHT {
     };
     callGoogleAppsScript();
   }
-
 }
 
 module.exports = setup;
