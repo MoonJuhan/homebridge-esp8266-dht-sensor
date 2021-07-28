@@ -1,8 +1,8 @@
-import {google} from 'googleapis'
+import { google } from 'googleapis';
 
 var _auth;
 
-const authorize = ({credentials, token}) => {
+const authorize = ({ credentials, token }) => {
   const { client_secret, client_id, redirect_uris } = credentials.installed;
   const oAuth2Client = new google.auth.OAuth2(
     client_id,
@@ -15,7 +15,7 @@ const authorize = ({credentials, token}) => {
 };
 
 function callAppsScript(scriptId, functionName, parameters, callback) {
-  const script = google.script({ version: 'v1', _auth });
+  const script = google.script({ version: 'v1', auth:_auth });
 
   script.scripts.run(
     {

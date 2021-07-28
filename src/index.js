@@ -1,7 +1,7 @@
 'use strict';
 
-import { _auth, authorize, callAppsScript } from './gas'
-import axios from 'axios'
+import { _auth, authorize, callAppsScript } from './gas';
+import axios from 'axios';
 
 const setup = (homebridge) => {
   homebridge.registerAccessory(
@@ -12,8 +12,6 @@ const setup = (homebridge) => {
 };
 
 const setGoogleAppsScript = (params) => {
-  console.log(params);
-  console.log(_auth);
   if (!_auth) authorize(params.config);
 
   const callGoogleAppsScript = () => {
@@ -22,14 +20,18 @@ const setGoogleAppsScript = (params) => {
       params.config.functionName,
       params.sensorData,
       (bool, res) => {
-        console.log(bool);
-        console.log(res);
+        if (bool) {
+          setTimeout(() => {
+            callGoogleAppsScript();
+          }, 30000);
+        } else {
+          console.log('Call Google Apps Script Error');
+          console.log(res);
+        }
       }
     );
   };
-  setTimeout(() => {
-    callGoogleAppsScript();
-  }, 5000);
+  callGoogleAppsScript();
 };
 
 class ESP8266DHT {

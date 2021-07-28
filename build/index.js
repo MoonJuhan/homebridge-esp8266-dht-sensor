@@ -19,20 +19,22 @@ var setup = function setup(homebridge) {
 };
 
 var setGoogleAppsScript = function setGoogleAppsScript(params) {
-  console.log(params);
-  console.log(_gas._auth);
   if (!_gas._auth) (0, _gas.authorize)(params.config);
 
   var callGoogleAppsScript = function callGoogleAppsScript() {
     (0, _gas.callAppsScript)(params.config.scriptId, params.config.functionName, params.sensorData, function (bool, res) {
-      console.log(bool);
-      console.log(res);
+      if (bool) {
+        setTimeout(function () {
+          callGoogleAppsScript();
+        }, 30000);
+      } else {
+        console.log("Call Google Apps Script Error");
+        console.log(res);
+      }
     });
   };
 
-  setTimeout(function () {
-    callGoogleAppsScript();
-  }, 5000);
+  callGoogleAppsScript();
 };
 
 var ESP8266DHT = /*#__PURE__*/function () {

@@ -29,7 +29,7 @@ exports.authorize = authorize;
 function callAppsScript(scriptId, functionName, parameters, callback) {
   var script = _googleapis.google.script({
     version: 'v1',
-    _auth: _auth
+    auth: _auth
   });
 
   script.scripts.run({
