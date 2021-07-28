@@ -18,25 +18,6 @@ var setup = function setup(homebridge) {
   homebridge.registerAccessory('homebridge-esp8266-dht-sensor', 'ESP8266DHT', ESP8266DHT);
 };
 
-var setGoogleAppsScript = function setGoogleAppsScript(params) {
-  if (!_gas._auth) (0, _gas.authorize)(params.config);
-
-  var callGoogleAppsScript = function callGoogleAppsScript() {
-    (0, _gas.callAppsScript)(params.config.scriptId, params.config.functionName, params.sensorData, function (bool, res) {
-      if (bool) {
-        setTimeout(function () {
-          callGoogleAppsScript();
-        }, 300000);
-      } else {
-        console.log('Call Google Apps Script Error');
-        console.log(res);
-      }
-    });
-  };
-
-  callGoogleAppsScript();
-};
-
 var ESP8266DHT = /*#__PURE__*/function () {
   function ESP8266DHT(log, config, api) {
     (0, _classCallCheck2["default"])(this, ESP8266DHT);
@@ -59,7 +40,7 @@ var ESP8266DHT = /*#__PURE__*/function () {
     this.humidityService.getCharacteristic(this.Characteristic.CurrentRelativeHumidity).onGet(this.handleCurrentRelativeHumidityGet.bind(this));
 
     if (config.gas) {
-      setGoogleAppsScript({
+      this.setGoogleAppsScript({
         sensorData: this.sensorData,
         config: config.gas
       });
@@ -129,6 +110,30 @@ var ESP8266DHT = /*#__PURE__*/function () {
     key: "getServices",
     value: function getServices() {
       return [this.temperatureService, this.humidityService];
+    }
+  }, {
+    key: "setGoogleAppsScript",
+    value: function setGoogleAppsScript(params) {
+      var _this = this;
+
+      if (!_gas._auth) (0, _gas.authorize)(params.config);
+
+      var callGoogleAppsScript = function callGoogleAppsScript() {
+        (0, _gas.callAppsScript)(params.config.scriptId, params.config.functionName, params.sensorData, function (bool, res) {
+          if (bool) {
+            setTimeout(function () {
+              _this.getSensorData();
+
+              callGoogleAppsScript();
+            }, 300000);
+          } else {
+            console.log('Call Google Apps Script Error');
+            console.log(res);
+          }
+        });
+      };
+
+      callGoogleAppsScript();
     }
   }]);
   return ESP8266DHT;
