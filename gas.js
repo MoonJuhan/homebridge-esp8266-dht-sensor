@@ -42,4 +42,4 @@ function callAppsScript(scriptId, functionName, parameters, callback) {
   );
 }
 
-export { _auth, authorize, callAppsScript };
+module.export = { _auth, authorize, callAppsScript };
