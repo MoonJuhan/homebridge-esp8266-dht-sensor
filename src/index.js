@@ -10,30 +10,6 @@ const setup = (homebridge) => {
     ESP8266DHT
   );
 };
-
-const setGoogleAppsScript = (params) => {
-  if (!_auth) authorize(params.config);
-
-  const callGoogleAppsScript = () => {
-    callAppsScript(
-      params.config.scriptId,
-      params.config.functionName,
-      params.sensorData,
-      (bool, res) => {
-        if (bool) {
-          setTimeout(() => {
-            callGoogleAppsScript();
-          }, 300000);
-        } else {
-          console.log('Call Google Apps Script Error');
-          console.log(res);
-        }
-      }
-    );
-  };
-  callGoogleAppsScript();
-};
-
 class ESP8266DHT {
   constructor(log, config, api) {
     log('ESP8266DHT Start!');
@@ -64,8 +40,9 @@ class ESP8266DHT {
     this.humidityService
       .getCharacteristic(this.Characteristic.CurrentRelativeHumidity)
       .onGet(this.handleCurrentRelativeHumidityGet.bind(this));
+
     if (config.gas) {
-      setGoogleAppsScript({
+      this.setGoogleAppsScript({
         sensorData: this.sensorData,
         config: config.gas,
       });
@@ -103,6 +80,31 @@ class ESP8266DHT {
   getServices() {
     return [this.temperatureService, this.humidityService];
   }
+
+  setGoogleAppsScript(params) {
+    if (!_auth) authorize(params.config);
+
+    const callGoogleAppsScript = () => {
+      callAppsScript(
+        params.config.scriptId,
+        params.config.functionName,
+        params.sensorData,
+        (bool, res) => {
+          if (bool) {
+            setTimeout(() => {
+              this.getSensorData();
+              callGoogleAppsScript();
+            }, 300000);
+          } else {
+            console.log('Call Google Apps Script Error');
+            console.log(res);
+          }
+        }
+      );
+    };
+    callGoogleAppsScript();
+  }
+
 }
 
 module.exports = setup;
