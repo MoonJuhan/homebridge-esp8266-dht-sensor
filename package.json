@@ -2,9 +2,9 @@
   "name": "homebridge-esp8266-dht-sensor",
   "version": "0.0.7",
   "description": "Allows homebridge to get ESP8266 DHT22 Sensor",
-  "main": "index.js",
+  "main": "./build/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": ".node_modules/.bin/babel src -d build"
   },
   "repository": {
     "type": "git",
@@ -26,5 +26,13 @@
   "dependencies": {
     "axios": "^0.21.1",
     "googleapis": "^82.0.0"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.14.8",
+    "@babel/core": "^7.14.8",
+    "@babel/node": "^7.14.7",
+    "@babel/polyfill": "^7.12.1",
+    "@babel/preset-env": "^7.14.8",
+    "babel-loader": "^8.2.2"
   }
 }

@@ -1,4 +1,4 @@
-const { google } = require('googleapis');
+import {google} from 'googleapis'
 
 var _auth;
 
@@ -42,4 +42,4 @@ function callAppsScript(scriptId, functionName, parameters, callback) {
   );
 }
 
-module.export = { _auth, authorize, callAppsScript };
+export { _auth, authorize, callAppsScript };

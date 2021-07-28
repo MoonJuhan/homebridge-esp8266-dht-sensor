@@ -1,8 +1,7 @@
 'use strict';
 
-const axios = require('axios');
-
-const { _auth, authorize, callAppsScript } = require('./gas');
+import { _auth, authorize, callAppsScript } from './gas'
+import axios from 'axios'
 
 const setup = (homebridge) => {
   homebridge.registerAccessory(
