@@ -24,6 +24,7 @@
   },
   "homepage": "https://github.com/MoonJuhan/homebridge-esp8266-dht-sensor#readme",
   "dependencies": {
-    "axios": "^0.21.1"
+    "axios": "^0.21.1",
+    "googleapis": "^82.0.0"
   }
 }
