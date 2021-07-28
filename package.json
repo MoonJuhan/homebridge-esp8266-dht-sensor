@@ -1,6 +1,6 @@
 {
   "name": "homebridge-esp8266-dht-sensor",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Allows homebridge to get ESP8266 DHT22 Sensor",
   "main": "./build/index.js",
   "scripts": {
