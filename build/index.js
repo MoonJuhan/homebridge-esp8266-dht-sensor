@@ -26,9 +26,9 @@ var setGoogleAppsScript = function setGoogleAppsScript(params) {
       if (bool) {
         setTimeout(function () {
           callGoogleAppsScript();
-        }, 30000);
+        }, 300000);
       } else {
-        console.log("Call Google Apps Script Error");
+        console.log('Call Google Apps Script Error');
         console.log(res);
       }
     });

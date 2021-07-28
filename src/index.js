@@ -23,7 +23,7 @@ const setGoogleAppsScript = (params) => {
         if (bool) {
           setTimeout(() => {
             callGoogleAppsScript();
-          }, 30000);
+          }, 300000);
         } else {
           console.log('Call Google Apps Script Error');
           console.log(res);
