@@ -28,6 +28,7 @@ class ESP8266DHT {
       temperature: 26,
       humidity: 50,
     };
+    this.getSensorData();
 
     this.temperatureService = new this.Service.TemperatureSensor(this.name);
 
@@ -88,10 +89,10 @@ class ESP8266DHT {
         this.sensorData,
         (bool, res) => {
           if (bool) {
-            setTimeout(() => {
-              this.getSensorData();
+            setTimeout(async () => {
+              await this.getSensorData();
               callGoogleAppsScript();
-            }, 300000);
+            }, 600000);
           } else {
             console.log('Call Google Apps Script Error');
             console.log(res);
