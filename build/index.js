@@ -34,6 +34,7 @@ var ESP8266DHT = /*#__PURE__*/function () {
       temperature: 26,
       humidity: 50
     };
+    this.getSensorData();
     this.temperatureService = new this.Service.TemperatureSensor(this.name);
     this.temperatureService.getCharacteristic(this.Characteristic.CurrentTemperature).onGet(this.handleCurrentTemperatureGet.bind(this));
     this.humidityService = new this.Service.HumiditySensor(this.name);
@@ -118,11 +119,24 @@ var ESP8266DHT = /*#__PURE__*/function () {
       var callGoogleAppsScript = function callGoogleAppsScript() {
         (0, _gas.callAppsScript)(params.scriptId, params.functionName, _this.sensorData, function (bool, res) {
           if (bool) {
-            setTimeout(function () {
-              _this.getSensorData();
+            setTimeout( /*#__PURE__*/(0, _asyncToGenerator2["default"])( /*#__PURE__*/_regenerator["default"].mark(function _callee2() {
+              return _regenerator["default"].wrap(function _callee2$(_context2) {
+                while (1) {
+                  switch (_context2.prev = _context2.next) {
+                    case 0:
+                      _context2.next = 2;
+                      return _this.getSensorData();
 
-              callGoogleAppsScript();
-            }, 300000);
+                    case 2:
+                      callGoogleAppsScript();
+
+                    case 3:
+                    case "end":
+                      return _context2.stop();
+                  }
+                }
+              }, _callee2);
+            })), 600000);
           } else {
             console.log('Call Google Apps Script Error');
             console.log(res);
