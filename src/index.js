@@ -1,6 +1,5 @@
 'use strict';
 
-import { _auth, authorize, callAppsScript } from './gas';
 import axios from 'axios';
 
 const setup = (homebridge) => {
@@ -25,8 +24,8 @@ class ESP8266DHT {
     this.log(`Name : ${this.name}, IP : ${this.ip}`);
 
     this.sensorData = {
-      temperature: 26,
-      humidity: 50,
+      temperature: 0,
+      humidity: 0,
     };
     this.getSensorData();
 
@@ -41,10 +40,6 @@ class ESP8266DHT {
     this.humidityService
       .getCharacteristic(this.Characteristic.CurrentRelativeHumidity)
       .onGet(this.handleCurrentRelativeHumidityGet.bind(this));
-
-    if (config.gas) {
-      this.setGoogleAppsScript(config.gas);
-    }
   }
 
   handleCurrentTemperatureGet() {
@@ -77,30 +72,6 @@ class ESP8266DHT {
 
   getServices() {
     return [this.temperatureService, this.humidityService];
-  }
-
-  setGoogleAppsScript(params) {
-    if (!_auth) authorize(params);
-
-    const callGoogleAppsScript = () => {
-      callAppsScript(
-        params.scriptId,
-        params.functionName,
-        this.sensorData,
-        (bool, res) => {
-          if (bool) {
-            setTimeout(async () => {
-              await this.getSensorData();
-              callGoogleAppsScript();
-            }, 600000);
-          } else {
-            console.log('Call Google Apps Script Error');
-            console.log(res);
-          }
-        }
-      );
-    };
-    callGoogleAppsScript();
   }
 }
 
